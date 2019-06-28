@@ -1,0 +1,8 @@
+{
+    "hostname": "localhost",
+    "http-ports": [8080, 18080],
+    "magic-strings": [
+        "this-is-a-test-string",
+        "START_KEYLOGGER"
+    ]
+}
