@@ -7,7 +7,7 @@
 # Simple Probing Tool for Corporate Walled Garden Networks
 
 The Problem: Network sensors such as
-[Suricata](https://suricata-ids.org/) or [Bro/Zeek](https://zeek.org/)
+[Suricata](https://suricata-ids.org/) or [Zeek](https://zeek.org/)
 have been successfully deployed in a large network, but the rate of
 alarms or other useful information is suspiciously low -- not even the
 usual background noise can be seen. Can we be sure that our sensors
@@ -76,15 +76,10 @@ Server:
 
 ## Building
 
-If a Go toolchain with [modules](...) support is available (version
-1.11 or later), simply running `make all` from the Git checkout is
+For recent Go versions, simply running `make all` from the Git checkout is
 sufficient.
 
-For earlier Go versions, run `go get github.com/DCSO/mauerspecht`
-change to the directory within the `GOPATH` where the project was
-downloaded, and run `make all`
-
-In both cases, the following binaries will be generated:
+The following binaries will be generated:
 - `mauerspecht-server`: The server component, a Linux/x86-64 binary
 - `mauerspecht-client-$ARCH`: The clients, for various architectures
 
@@ -95,15 +90,17 @@ In both cases, the following binaries will be generated:
 - The server stores session keys submitted by clients in memory and does
   not expire them yet. This is a denial-of-service vector.
 - Bundled client configuration for easy single-binary deployment (see
-  also: [spyre](https://github.com/DCSO/spyre))
+  also: [spyre](https://github.com/spyre-project/spyre))
 
-## Author
+## Contact
 
-Hilko Bengen <<hilko.bengen@dcso.de>>
+Sascha Steinbiss <<sascha.steinbiss@dcso.de>>
+
+Original Author: Hilko Bengen
 
 ## Copyright
 
-Copyright 2019 Deutsche Cyber-Sicherheitsorganisation GmbH
+Copyright 2019, 2024 Deutsche Cyber-Sicherheitsorganisation GmbH
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
