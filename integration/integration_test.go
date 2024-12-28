@@ -27,7 +27,7 @@ func TestIntegration(t *testing.T) {
 	if s == nil {
 		t.Fatal("could not start server")
 	}
-	c, err = client.New(fmt.Sprintf("http://%s:%d/", config.Hostname, config.HTTPPorts[0]))
+	c, err = client.New(fmt.Sprintf("http://%s:%d/", config.Hostname, config.HTTPPorts[0]), "")
 	if err != nil {
 		t.Fatalf("could not create client: %v", err)
 	}
