@@ -1,9 +1,10 @@
 NAMESPACE := github.com/DCSO/mauerspecht
-CLIENT_PLATFORMS := x86_64-linux x86_64-windows x86_64-darwin i386-linux i386-windows
+CLIENT_PLATFORMS := x86_64-linux x86_64-windows x86_64-darwin arm64-darwin i386-linux i386-windows
 GOFILES := $(shell find -name "*.go")
 
 define goarch
 $(or $(if $(findstring x86_64,$1),amd64),\
+     $(if $(findstring arm64,$1),arm64),\
      $(if $(findstring i386,$1),386),\
      $(error unknown arch $1))
 endef
