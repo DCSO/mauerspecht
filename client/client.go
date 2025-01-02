@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -38,7 +37,7 @@ func (c *Client) do(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 	if res.StatusCode != 200 {
-		return nil, fmt.Errorf("Expected status code 200, got %d", res.StatusCode)
+		return nil, fmt.Errorf("expected status code 200, got %d", res.StatusCode)
 	}
 	return res, nil
 }
@@ -89,10 +88,10 @@ func New(baseurl string, proxyurl string) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	buf, err := ioutil.ReadAll(r.Body)
+	buf, _ := io.ReadAll(r.Body)
 	r.Body.Close()
 	if len(buf) != 32 {
-		return nil, fmt.Errorf("Expected 32 byte key lengths from server, got %d", len(buf))
+		return nil, fmt.Errorf("expected 32 byte key lengths from server, got %d", len(buf))
 	}
 	copy(c.ServerPubKey[:], buf)
 	c.logf("Fetching configuration from %s", baseurl)
@@ -100,7 +99,7 @@ func New(baseurl string, proxyurl string) (*Client, error) {
 	if r, err = c.do(&http.Request{Method: "GET", URL: u}); err != nil {
 		return nil, err
 	}
-	buf, err = ioutil.ReadAll(r.Body)
+	buf, err = io.ReadAll(r.Body)
 	r.Body.Close()
 	if err != nil {
 		return nil, err
@@ -191,7 +190,7 @@ func (c *Client) download() {
 				}
 			}
 			if xfer&xferBody != 0 {
-				buf, _ := ioutil.ReadAll(res.Body)
+				buf, _ := io.ReadAll(res.Body)
 				if string(buf) == c.Config.MagicStrings[id] {
 					c.logf("download %s (%d): found string in body", xfer, id)
 				} else {
@@ -227,7 +226,7 @@ func (c *Client) upload() {
 				c.logf("upload %s (%d): %v", xfer, id, err)
 				continue
 			}
-			buf, err := ioutil.ReadAll(res.Body)
+			buf, err := io.ReadAll(res.Body)
 			res.Body.Close()
 			if err != nil {
 				c.logf("upload %s (%d): %v", xfer, id, err)
@@ -291,12 +290,10 @@ func (c *Client) report() {
 	if err != nil {
 		c.logf("Failed to send log message: %v", err)
 	}
-	return
 }
 
 func (c *Client) Run() {
 	c.download()
 	c.upload()
 	c.report()
-	return
 }

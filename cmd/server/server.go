@@ -6,7 +6,6 @@ import (
 
 	"encoding/json"
 	"flag"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
@@ -16,7 +15,7 @@ func main() {
 	var cfgfile string
 	flag.StringVar(&cfgfile, "config", "mauerspecht.json", "Config file")
 	flag.Parse()
-	buf, err := ioutil.ReadFile(cfgfile)
+	buf, err := os.ReadFile(cfgfile)
 	if err != nil {
 		log.Fatalf("open config file %s: %v", cfgfile, err)
 	}
@@ -28,7 +27,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error while initializing server: %v", err)
 	}
-	stop := make(chan os.Signal)
+	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)
 	<-stop
 	s.Close()
