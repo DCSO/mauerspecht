@@ -28,7 +28,7 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     container:
-      image: golang:1.23-bullseye
+      image: golang:1.24-bullseye
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
